@@ -1,0 +1,26 @@
+﻿<Window x:Class="FabricAndAbstract.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FabricAndAbstract"
+        mc:Ignorable="d"
+        Title="FabricAndAbstract" Height="720" Width="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Background="LightGray" Margin="100">
+            <ComboBox BorderBrush="Black" BorderThickness="3" Height="100" Width="260" FontSize="64" Margin="5" x:Name="Theme" SelectionChanged="Theme_SelectionChanged">
+                <ComboBoxItem Content="Light" IsSelected="True"/>
+                <ComboBoxItem Content="Dark"/>
+                <ComboBoxItem Content="Colorful"/>
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" x:Name="Fig">
+            <Button Content="Создать фигуру" FontSize="32" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
