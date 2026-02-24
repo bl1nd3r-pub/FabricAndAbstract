@@ -19,7 +19,7 @@ namespace FabricAndAbstract
         public MainWindow()
         {
             InitializeComponent();
-            //Figure <Fihures> = new 
+           
 
         }
 
@@ -34,7 +34,10 @@ namespace FabricAndAbstract
             SquareCreator squareCreator;
             TriangleCreator triangleCreator;
 
-            switch (Theme.SelectedItem.ToString())
+            string value = Theme.SelectedValue.ToString();
+            value = value.Substring(value.LastIndexOf(' ')+1);
+
+            switch (value)
             {
                 case "Light":
                     circleCreator = new LightCircleCreator();
@@ -54,9 +57,21 @@ namespace FabricAndAbstract
                 default:
                     return;
             }
-            Figure figa = circleCreator.CreateCircle();
-            UIElement ff = figa.CreateUIElement();
-            Fig.Children.Add(ff);
+            Figure figaC = circleCreator.CreateCircle();
+            Figure figaS = squareCreator.CreateSquare();
+            Figure figaT = triangleCreator.CreateTriangle();
+
+            UIElement ffC = figaC.CreateUIElement();
+            UIElement ffS = figaS.CreateUIElement();
+            UIElement ffT = figaT.CreateUIElement();
+
+            if (Fig != null)
+            {
+                Fig.Children.Clear();
+                Fig.Children.Add(ffC);
+                Fig.Children.Add(ffS);
+                Fig.Children.Add(ffT);
+            }
         }
     }
 

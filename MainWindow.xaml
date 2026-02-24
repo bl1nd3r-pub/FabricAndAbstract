@@ -20,7 +20,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1" x:Name="Fig">
-            <Button Content="Создать фигуру" FontSize="32" Click="Button_Click"/>
+            <Label Content="Начните создание фигур!" FontSize="32" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Window>
