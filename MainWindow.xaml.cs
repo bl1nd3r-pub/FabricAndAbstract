@@ -16,47 +16,33 @@ namespace FabricAndAbstract
         public MainWindow()
         {
             InitializeComponent();
-           
-
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+        private IFigureFactory currentFactory;
+
 
         private void Theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CircleCreator circleCreator;
-            SquareCreator squareCreator;
-            TriangleCreator triangleCreator;
-
             string value = Theme.SelectedValue.ToString();
-            value = value.Substring(value.LastIndexOf(' ')+1);
+            value = value.Substring(value.LastIndexOf(' ') + 1);
 
             switch (value)
             {
                 case "Light":
-                    circleCreator = new LightCircleCreator();
-                    squareCreator = new LightSquareCreator();
-                    triangleCreator = new LightTriangleCreator();
+                    currentFactory = new LightFactory();
                     break;
                 case "Dark":
-                    circleCreator = new DarkCircleCreator();
-                    squareCreator = new DarkSquareCreator();
-                    triangleCreator = new DarkTriangleCreator();
+                    currentFactory = new DarkFactory();
                     break;
                 case "Colorful":
-                    circleCreator = new ColorfulCircleCreator();
-                    squareCreator = new ColorfulSquareCreator();
-                    triangleCreator = new ColorfulTriangleCreator();
+                    currentFactory = new ColorfulFactory();
                     break;
                 default:
                     return;
             }
-            Figure figaC = circleCreator.CreateCircle();
-            Figure figaS = squareCreator.CreateSquare();
-            Figure figaT = triangleCreator.CreateTriangle();
+            Figure figaC = currentFactory.CreateCircle();
+            Figure figaS = currentFactory.CreateSquare();
+            Figure figaT = currentFactory.CreateTriangle();
 
             UIElement ffC = figaC.CreateUIElement();
             UIElement ffS = figaS.CreateUIElement();
@@ -71,6 +57,8 @@ namespace FabricAndAbstract
             }
         }
     }
+
+    
 
     public abstract class Figure
     {
@@ -127,60 +115,39 @@ namespace FabricAndAbstract
         }
     }
 
-    // ФАБРИЧНЫЕ МЕТОДЫ
+    // АБСТРАКТНЫЕ ФАБРИКИ
 
-    public abstract class CircleCreator { 
-        public abstract Circle CreateCircle();
-    }
-    public abstract class SquareCreator{
-        public abstract Square CreateSquare();
-    }
-    public abstract class TriangleCreator { 
-        public abstract Triangle CreateTriangle();
-    }
-    ///
-    /// Круги
-    /// 
-    public class LightCircleCreator : CircleCreator
+    public interface IFigureFactory
     {
-        public override Circle CreateCircle() => new Circle { Color = Color.FromRgb(207, 207, 207)};
+
+        Circle CreateCircle();
+        Square CreateSquare();
+        Triangle CreateTriangle();
     }
-    public class DarkCircleCreator : CircleCreator
+
+    public class LightFactory : IFigureFactory
     {
-        public override Circle CreateCircle() => new Circle { Color = Color.FromRgb(82, 82, 82) };
+        public Circle CreateCircle() => new Circle { Color = Color.FromRgb(207, 207, 207) };
+
+        public Square CreateSquare() => new Square { Color = Color.FromRgb(207, 207, 207) };
+
+        public Triangle CreateTriangle() => new Triangle { Color = Color.FromRgb(207, 207, 207) };
     }
-    public class ColorfulCircleCreator : CircleCreator
+    public class DarkFactory : IFigureFactory
     {
-        public override Circle CreateCircle() => new Circle { Color = Color.FromRgb(0, 128, 0) };
+        public Circle CreateCircle() => new Circle { Color = Color.FromRgb(82, 82, 82) };
+
+        public Square CreateSquare() => new Square { Color = Color.FromRgb(82, 82, 82) };
+
+        public Triangle CreateTriangle() => new Triangle { Color = Color.FromRgb(82, 82, 82) };
     }
-    ///
-    /// Квадраты
-    /// 
-    public class LightSquareCreator : SquareCreator
+    public class ColorfulFactory : IFigureFactory
     {
-        public override Square CreateSquare() => new Square { Color = Color.FromRgb(207, 207, 207) };
-    }
-    public class DarkSquareCreator : SquareCreator
-    {
-        public override Square CreateSquare() => new Square { Color = Color.FromRgb(82, 82, 82) };
-    }
-    public class ColorfulSquareCreator : SquareCreator
-    {
-        public override Square CreateSquare() => new Square { Color = Color.FromRgb(0, 128, 0) };
-    }
-    ///
-    /// Треугольники
-    /// 
-    public class LightTriangleCreator : TriangleCreator
-    {
-        public override Triangle CreateTriangle() => new Triangle { Color = Color.FromRgb(207, 207, 207) };
-    }
-    public class DarkTriangleCreator : TriangleCreator
-    {
-        public override Triangle CreateTriangle() => new Triangle { Color = Color.FromRgb(82, 82, 82) };
-    }
-    public class ColorfulTriangleCreator : TriangleCreator
-    {
-        public override Triangle CreateTriangle() => new Triangle { Color = Color.FromRgb(0, 128, 0) };
+        public Circle CreateCircle() => new Circle { Color = Color.FromRgb(0, 128, 0) };
+
+        public Square CreateSquare() => new Square { Color = Color.FromRgb(0, 128, 0) };
+
+        public Triangle CreateTriangle() => new Triangle { Color = Color.FromRgb(0, 128, 0) };
     }
 }
+
